@@ -7,8 +7,7 @@ app.use(express.json());
 
 app.use(router);
 
-
 app.listen(3333, () => {
-  console.log("Let's GOOOOOOO 💜");
+  console.log("Let's GOOOOOOO 💜🚀");
 });
 
