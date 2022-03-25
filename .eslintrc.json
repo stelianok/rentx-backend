@@ -69,7 +69,6 @@
         }
       }
     ],
-
     "import/no-extraneous-dependencies": [
       "error",
       {
@@ -80,7 +79,6 @@
     ],
     "prettier/prettier": "error"
   },
-
   "settings": {
     "import/resolver": {
       "typescript": {}
