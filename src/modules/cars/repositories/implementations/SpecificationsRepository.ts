@@ -6,7 +6,7 @@ class SpecificationsRepository implements ISpecificationsRepository {
   private repository: Repository<Specification>;
 
   constructor() {
-    this.repository  = getRepository(Specification);
+    this.repository = getRepository(Specification);
   }
 
   async create({ description, name }: ICreateSpecificationDTO): Promise<void> {
@@ -19,7 +19,7 @@ class SpecificationsRepository implements ISpecificationsRepository {
   }
 
   async findByName(name: string): Promise<Specification> {
-    const specification = await this.repository.findOne({name});
+    const specification = await this.repository.findOne({ name });
     return specification;
   }
 }

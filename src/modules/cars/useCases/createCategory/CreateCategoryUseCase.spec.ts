@@ -1,4 +1,4 @@
-import { AppError } from "../../../../errors/AppErrror";
+import { AppError } from "../../../../errors/AppError";
 import { CategoriesRepositoryInMemory } from "../../repositories/inMemory/CategoriesRepositoryInMemory";
 import { CreateCategoryUseCase } from "./CreateCategoryUseCase";
 
@@ -34,17 +34,17 @@ describe("Create Category", () => {
   });
 
   it("should not be able to create a category that already exists", async () => {
-    expect(async() => {
+    expect(async () => {
       const category = {
         name: "Category Test",
         description: "Category description test",
       }
-  
+
       await createCategoryUseCase.execute({
         name: category.name,
         description: category.description,
       });
-  
+
       await createCategoryUseCase.execute({
         name: category.name,
         description: category.description,
