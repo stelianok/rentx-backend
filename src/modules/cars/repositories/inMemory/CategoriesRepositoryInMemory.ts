@@ -1,7 +1,7 @@
 import { Category } from "../../entities/Category";
 import { ICategoriesRepository, ICreateCategoryDTO } from "../ICategoriesRepository";
 
-class CategoryRepositoryInMemory implements ICategoriesRepository {
+class CategoriesRepositoryInMemory implements ICategoriesRepository {
   
   categories: Category[] = [];
 
@@ -25,4 +25,4 @@ class CategoryRepositoryInMemory implements ICategoriesRepository {
   }
 }
 
-export { CategoryRepositoryInMemory };
+export { CategoriesRepositoryInMemory };
