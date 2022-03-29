@@ -1,5 +1,4 @@
-
-import { Connection, createConnection, getConnectionOptions } from 'typeorm';
+import { Connection, createConnection, getConnectionOptions } from "typeorm";
 
 export default async (host = "database_rentx"): Promise<Connection> => {
   const defaultOptions = await getConnectionOptions();
@@ -9,4 +8,4 @@ export default async (host = "database_rentx"): Promise<Connection> => {
       host,
     })
   );
-}
+};

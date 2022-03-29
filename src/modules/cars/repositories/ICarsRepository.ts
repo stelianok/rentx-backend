@@ -7,6 +7,6 @@ export default interface ICarsRepository {
   findAllAvailable(
     brand?: string,
     category_id?: string,
-    name?: string,
+    name?: string
   ): Promise<Car[]>;
 }

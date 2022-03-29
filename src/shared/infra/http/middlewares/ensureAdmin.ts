@@ -1,6 +1,7 @@
 import { UsersRepository } from "@modules/accounts/infra/typeorm/repositories/UsersRepository";
-import { AppError } from "@shared/errors/AppError";
 import { NextFunction, Request, Response } from "express";
+
+import { AppError } from "@shared/errors/AppError";
 
 export async function ensureAdmin(
   request: Request,
@@ -17,5 +18,5 @@ export async function ensureAdmin(
     throw new AppError("User isn't admin!");
   }
 
-  next()
-} 
+  next();
+}

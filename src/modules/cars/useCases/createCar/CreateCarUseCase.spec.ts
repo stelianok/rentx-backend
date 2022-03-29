@@ -1,12 +1,12 @@
 import { CarsRepositoryInMemory } from "@modules/cars/repositories/inMemory/CarsRepositoryInMemory";
 import { AppError } from "@shared/errors/AppError";
+
 import { CreateCarUseCase } from "./CreateCarUseCase";
 
 let createCarUseCase: CreateCarUseCase;
 let carsRepositoryInMemory: CarsRepositoryInMemory;
 
 describe("Create Car", () => {
-
   beforeEach(() => {
     carsRepositoryInMemory = new CarsRepositoryInMemory();
     createCarUseCase = new CreateCarUseCase(carsRepositoryInMemory);
@@ -20,7 +20,7 @@ describe("Create Car", () => {
       license_plate: "ABC-1234",
       fine_amount: 60,
       brand: "Brand",
-      category_id: "category"
+      category_id: "category",
     });
 
     expect(car).toHaveProperty("id");
@@ -35,7 +35,7 @@ describe("Create Car", () => {
         license_plate: "ABC-1234",
         fine_amount: 60,
         brand: "Brand",
-        category_id: "category"
+        category_id: "category",
       });
 
       await createCarUseCase.execute({
@@ -45,9 +45,8 @@ describe("Create Car", () => {
         license_plate: "ABC-1234",
         fine_amount: 60,
         brand: "Brand",
-        category_id: "category"
+        category_id: "category",
       });
-
     }).rejects.toBeInstanceOf(AppError);
   });
 
@@ -59,7 +58,7 @@ describe("Create Car", () => {
       license_plate: "ABC-1234",
       fine_amount: 60,
       brand: "Brand",
-      category_id: "category"
+      category_id: "category",
     });
 
     expect(car.available).toBe(true);

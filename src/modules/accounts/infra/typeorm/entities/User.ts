@@ -1,9 +1,8 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, PrimaryColumn } from "typeorm";
 import { v4 as uuidV4 } from "uuid";
 
 @Entity("users")
 class User {
-
   @PrimaryColumn()
   id: string;
 
@@ -35,4 +34,4 @@ class User {
   }
 }
 
-export { User }
+export { User };

@@ -17,8 +17,7 @@ describe("Authenticate user", () => {
     );
 
     createUserUseCase = new CreateUserUseCase(usersRepositoryInMemory);
-
-  })
+  });
 
   it("should be able to authenticate an user", async () => {
     const user: ICreateUserDTO = {
@@ -58,8 +57,8 @@ describe("Authenticate user", () => {
         driver_license: "9999",
         email: "user@user.com",
         password: "1234",
-        name: "User Test Error"
-      }
+        name: "User Test Error",
+      };
 
       await createUserUseCase.execute(user);
 
@@ -67,7 +66,6 @@ describe("Authenticate user", () => {
         email: user.email,
         password: "incorrectPassword",
       });
-
     }).rejects.toBeInstanceOf(AppError);
   });
 });

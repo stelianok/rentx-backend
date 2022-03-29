@@ -1,14 +1,16 @@
 import { CarsRepositoryInMemory } from "@modules/cars/repositories/inMemory/CarsRepositoryInMemory";
+
 import { ListAvailableCarsUseCase } from "./ListAvailableCarsUseCase";
 
 let listAvailableCarsUseCase: ListAvailableCarsUseCase;
 let carsRepositoryInMemory: CarsRepositoryInMemory;
 
 describe("List Cars", () => {
-
   beforeEach(() => {
     carsRepositoryInMemory = new CarsRepositoryInMemory();
-    listAvailableCarsUseCase = new ListAvailableCarsUseCase(carsRepositoryInMemory);
+    listAvailableCarsUseCase = new ListAvailableCarsUseCase(
+      carsRepositoryInMemory
+    );
   });
 
   it("should be able to list all available cars", async () => {
@@ -19,7 +21,7 @@ describe("List Cars", () => {
       license_plate: "ABC-1234",
       fine_amount: 60,
       brand: "Brand",
-      category_id: "cfd46f4a-61f6-490f-9057-d89f9469aca5"
+      category_id: "cfd46f4a-61f6-490f-9057-d89f9469aca5",
     });
 
     const cars = await listAvailableCarsUseCase.execute({});
@@ -35,7 +37,7 @@ describe("List Cars", () => {
       license_plate: "ABC-1234",
       fine_amount: 60,
       brand: "BrandBrand",
-      category_id: "cfd46f4a-61f6-490f-9057-d89f9469aca5"
+      category_id: "cfd46f4a-61f6-490f-9057-d89f9469aca5",
     });
 
     const cars = await listAvailableCarsUseCase.execute({
@@ -53,7 +55,7 @@ describe("List Cars", () => {
       license_plate: "ABC-1234",
       fine_amount: 60,
       brand: "BrandBrand",
-      category_id: "cfd46f4a-61f6-490f-9057-d89f9469aca5"
+      category_id: "cfd46f4a-61f6-490f-9057-d89f9469aca5",
     });
 
     const cars = await listAvailableCarsUseCase.execute({
@@ -71,7 +73,7 @@ describe("List Cars", () => {
       license_plate: "ABC-1234",
       fine_amount: 60,
       brand: "BrandBrand",
-      category_id: "12345"
+      category_id: "12345",
     });
 
     const cars = await listAvailableCarsUseCase.execute({
@@ -80,5 +82,4 @@ describe("List Cars", () => {
 
     expect(cars).toEqual([car]);
   });
-
 });

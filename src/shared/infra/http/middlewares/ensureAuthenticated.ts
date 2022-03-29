@@ -1,7 +1,7 @@
+import { UsersRepository } from "@modules/accounts/infra/typeorm/repositories/UsersRepository";
 import { NextFunction, Request, Response } from "express";
 import { verify } from "jsonwebtoken";
 
-import { UsersRepository } from "@modules/accounts/infra/typeorm/repositories/UsersRepository";
 import { AppError } from "@shared/errors/AppError";
 
 interface IPayload {
@@ -13,7 +13,6 @@ export async function ensureAuthenticated(
   response: Response,
   next: NextFunction
 ): Promise<void> {
-
   const authHeader = request.headers.authorization;
 
   if (!authHeader) {
@@ -37,13 +36,11 @@ export async function ensureAuthenticated(
     }
 
     request.user = {
-      id: user.id
-    }
+      id: user.id,
+    };
 
     next();
-  }
-  catch {
+  } catch {
     throw new AppError("Invalid token", 401);
   }
-
 }
