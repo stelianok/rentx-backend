@@ -1,27 +1,32 @@
 import { CarsRepositoryInMemory } from "@modules/cars/repositories/inMemory/CarsRepositoryInMemory";
+import { SpecificationRepositoryInMemory } from "@modules/cars/repositories/inMemory/SpecificationRepositoryInMemory";
 import { AppError } from "@shared/errors/AppError";
 
 import { CreateCarSpecificationUseCase } from "./CreateCarSpecificationUseCase";
 
 let createCarSpecificationUseCase: CreateCarSpecificationUseCase;
 let carsRepositoryInMemory: CarsRepositoryInMemory;
+let specificationsRepository: SpecificationRepositoryInMemory;
 
 describe("Create Car Specification", () => {
   beforeEach(() => {
     carsRepositoryInMemory = new CarsRepositoryInMemory();
+    specificationsRepository = new SpecificationRepositoryInMemory();
+
     createCarSpecificationUseCase = new CreateCarSpecificationUseCase(
-      carsRepositoryInMemory
+      carsRepositoryInMemory,
+      specificationsRepository
     );
   });
 
   it("should not be able to add a new specification to a non-existent car", () => {
     expect(async () => {
       const car_id = "1234";
-      const specifications_id = ["54321"];
+      const specifications_ids = ["54321"];
 
       await createCarSpecificationUseCase.execute({
         car_id,
-        specifications_id,
+        specifications_ids,
       });
     }).rejects.toBeInstanceOf(AppError);
   });
@@ -37,11 +42,19 @@ describe("Create Car Specification", () => {
       category_id: "category",
     });
 
-    const specifications_id = ["54321"];
-
-    await createCarSpecificationUseCase.execute({
-      car_id: car.id,
-      specifications_id,
+    const specification = await specificationsRepository.create({
+      description: "testDescription",
+      name: "testName",
     });
+
+    const specifications_ids = [specification.id];
+
+    const specificationsCars = await createCarSpecificationUseCase.execute({
+      car_id: car.id,
+      specifications_ids,
+    });
+
+    expect(specificationsCars).toHaveProperty("specifications");
+    expect(specificationsCars.specifications.length).toBe(1);
   });
 });
