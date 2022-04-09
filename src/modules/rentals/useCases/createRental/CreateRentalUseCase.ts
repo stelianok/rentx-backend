@@ -1,3 +1,6 @@
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+
 import { Rental } from "@modules/rentals/infra/typeorm/entities/Rental";
 import { IRentalsRepository } from "@modules/rentals/repositories/IRentalsRepository";
 import { AppError } from "@shared/errors/AppError";
@@ -7,6 +10,8 @@ interface IRequest {
   car_id: string;
   expected_return_date: Date;
 }
+
+dayjs.extend(utc);
 
 class CreateRentalUseCase {
   constructor(private rentalsRepository: IRentalsRepository) {}
@@ -30,6 +35,23 @@ class CreateRentalUseCase {
 
     if (rentalOpenToUser) {
       throw new AppError("User currently busy with another rental");
+    }
+
+    const expectedReturnDateFormat = dayjs(expected_return_date)
+      .utc()
+      .local()
+      .format();
+
+    const dateNow = dayjs().utc().local().format();
+
+    const compare = dayjs(expectedReturnDateFormat).diff(dateNow, "hours");
+
+    const minimumRentalHours = 24;
+
+    if (compare < minimumRentalHours) {
+      throw new AppError(
+        "Rental should have a minimum rental time of 24 hours"
+      );
     }
 
     const rental = await this.rentalsRepository.create({
