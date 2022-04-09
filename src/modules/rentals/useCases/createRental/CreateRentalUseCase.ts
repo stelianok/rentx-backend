@@ -3,6 +3,7 @@ import utc from "dayjs/plugin/utc";
 
 import { Rental } from "@modules/rentals/infra/typeorm/entities/Rental";
 import { IRentalsRepository } from "@modules/rentals/repositories/IRentalsRepository";
+import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
 import { AppError } from "@shared/errors/AppError";
 
 interface IRequest {
@@ -14,7 +15,10 @@ interface IRequest {
 dayjs.extend(utc);
 
 class CreateRentalUseCase {
-  constructor(private rentalsRepository: IRentalsRepository) {}
+  constructor(
+    private rentalsRepository: IRentalsRepository,
+    private dateProvider: IDateProvider
+  ) {}
 
   async execute({
     user_id,
@@ -37,14 +41,12 @@ class CreateRentalUseCase {
       throw new AppError("User currently busy with another rental");
     }
 
-    const expectedReturnDateFormat = dayjs(expected_return_date)
-      .utc()
-      .local()
-      .format();
+    const dateNow = this.dateProvider.dateNow();
 
-    const dateNow = dayjs().utc().local().format();
-
-    const compare = dayjs(expectedReturnDateFormat).diff(dateNow, "hours");
+    const compare = this.dateProvider.compareInHours(
+      dateNow,
+      expected_return_date
+    );
 
     const minimumRentalHours = 24;
 
