@@ -25,7 +25,9 @@
     "ts-jest": "^27.1.4",
     "tsyringe": "^4.6.0",
     "typeorm": "^0.2.41",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "@types/supertest": "^2.0.12",
+    "supertest": "^6.2.2"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
