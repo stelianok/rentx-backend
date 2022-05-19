@@ -30,7 +30,7 @@ describe("Create category controller", () => {
     }
   });
 
-  it("should be able to create a new category", async () => {
+  it("should be able to list all available categories", async () => {
     const responseToken = await request(app).post("/sessions").send({
       email: "admin@rentx.com.br",
       password: "admin",
@@ -38,7 +38,7 @@ describe("Create category controller", () => {
 
     const { token } = responseToken.body;
 
-    const response = await request(app)
+    await request(app)
       .post("/categories")
       .send({
         name: "Category Test name",
@@ -48,27 +48,11 @@ describe("Create category controller", () => {
         Authorization: `Bearer ${token}`,
       });
 
-    expect(response.status).toBe(201);
-  });
+    const response = await request(app).get("/categories");
 
-  it("should not be able to create a new category", async () => {
-    const responseToken = await request(app).post("/sessions").send({
-      email: "admin@rentx.com.br",
-      password: "admin",
-    });
-
-    const { token } = responseToken.body;
-
-    const response = await request(app)
-      .post("/categories")
-      .send({
-        name: "Category Test name",
-        description: "Category Supertest",
-      })
-      .set({
-        Authorization: `Bearer ${token}`,
-      });
-
-    expect(response.status).toBe(401);
+    expect(response.status).toBe(200);
+    expect(response.body.length).toBe(1);
+    expect(response.body[0]).toHaveProperty("id");
+    expect(response.body[0].name).toEqual("Category Test name");
   });
 });
